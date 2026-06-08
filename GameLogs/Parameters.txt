@@ -1,0 +1,6 @@
+		Quantity 		Length		width		Max Speed 		Maneuverability
+Container         4		76m			13m				16knots			Low
+Bulk			6		28m			6m				32knots			Moderate
+Tugboat		10		10m			3m				50knots 			High
+
+
