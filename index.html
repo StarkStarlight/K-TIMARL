@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>K-TIMARL: Scalable and Rule-Compliant Multi-Agent Reinforcement Learning</title>
+    
+    <!-- Bulma CSS Framework -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        .hero-body {
+            padding: 3rem 1.5rem;
+        }
+        .section {
+            padding: 3rem 1.5rem;
+        }
+        .teaser-video {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .figure-img {
+            width: 100%;
+            max-width: 600px;
+            margin: 1rem auto;
+            display: block;
+            border-radius: 4px;
+        }
+        .citation-box {
+            background-color: #f5f5f5;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            border-left: 4px solid #005f73;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 1. 导航栏 -->
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#">
+                <strong>K-TIMARL</strong>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- 2. 页头 Hero Section -->
+<section class="hero is-light">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title is-3">K-TIMARL: Scalable and Rule-Compliant Multi-Agent Reinforcement Learning for Large-Scale Port Vessel Traffic Management</h1>
+            
+            <div class="authors is-size-5 mt-4">
+                <p>
+                    <strong>Yiming Zhao</strong><sup>1</sup>, 
+                    <strong>Yuqi Shi</strong><sup>2</sup>, 
+                    <strong>Duanfeng Han</strong><sup>1</sup>, 
+                    <strong>Xiao Peng</strong><sup>1</sup>, 
+                    <strong>Wangyuan Zhao</strong><sup>1</sup>, 
+                    <strong>Fenglei Han</strong><sup>1*</sup>
+                </p>
+                <p class="is-size-6">
+                    <sup>1</sup>Harbin Engineering University | 
+                    <sup>2</sup>The Chinese University of Hong Kong, Shenzhen
+                </p>
+            </div>
+
+            <!-- 代码/论文链接 -->
+            <div class="buttons mt-4">
+                <a href="#placeholder" class="button is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                </a>
+                <a href="#placeholder" class="button is-link">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3. 摘要 Abstract -->
+<section class="section">
+    <div class="container content">
+        <h2 class="title is-4">Abstract</h2>
+        <p>
+            Increasing maritime traffic has intensified congestion and safety risks in major ports, requiring scalable and rule-compliant autonomous decision-making for multi-vessel operations. Existing centralized coordination methods suffer from excessive communication overhead, while decentralized approaches often struggle to maintain coordination quality and stable compliance with the International Regulations for Preventing Collisions at Sea (COLREGs) and the International Association of Marine Aids to Navigation and Lighthouse Authorities (IALA) buoyage rules. This paper proposes <strong>K-TIMARL</strong>, a topology-integrated multi-agent reinforcement learning framework for large-scale port vessel traffic management.
+        </p>
+        <p>
+            Based on a $\xi$-dependent networked MDP, K-TIMARL restricts coordination to <strong>k-hop neighborhoods</strong> and integrates per-vessel dynamics models with branched rollouts to improve sample efficiency and reduce communication cost. A graph-attention-based IALA buoy embedding and a hybrid reward function are further introduced to promote channel-aware and COLREGs-compliant maneuvers. The framework is validated in a high-fidelity full-scale Unity3D digital twin of Yantai Port under wind-wave disturbances and heterogeneous vessel dynamics.
+        </p>
+        <p>
+            In the 20-vessel high-density scenario, K-TIMARL achieves an <strong>88.6% success rate</strong>, a <strong>99.3% COLREGs compliance rate</strong>, and only <strong>0.05 collision violations per episode</strong>, while reducing communication cost by <strong>85.1%</strong> compared with centralized baselines.
+        </p>
+    </div>
+</section>
+
+<!-- 4. 视频展示 Teaser -->
+<section class="section has-text-centered">
+    <div class="container">
+        <h2 class="title is-4">Watch the Demonstration</h2>
+        <!-- 视频占位符 -->
+        <video class="teaser-video" controls>
+            <source src="static/videos/k-timarl_demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p class="mt-2"><em>Fig. 1. Comparison of communication architectures and the K-TIMARL framework.</em></p>
+    </div>
+</section>
+
+<!-- 5. 核心方法 Methodology -->
+<section class="section">
+    <div class="container content">
+        <h2 class="title is-4">Methodology</h2>
+        
+        <div class="columns is-centered">
+            <div class="column is-half">
+                <!-- 图片占位符: Fig 2 -->
+                <img src="static/images/fig2_topology.png" alt="K-TIMARL Framework Overview" class="figure-img">
+                <p><em>Fig. 2. Illustration of the topological perception and localized modeling framework. (A) Physical interaction topology; (B) Localized modeling architecture; (C) Typical port topologies.</em></p>
+            </div>
+        </div>
+
+        <h3 class="title is-5">Key Components</h3>
+        <ul>
+            <li><strong>Topological k-hop Neighborhood:</strong> Restricts information exchange to k-hop neighbors ($k=3$), reducing computational complexity from $O(N)$ to $O(|N_k|)$.</li>
+            <li><strong>GAT-IALA Embedding:</strong> Treats the IALA buoyage system as a directed graph, using Graph Attention Networks (GAT) to embed channel constraints directly into the state space.</li>
+            <li><strong>Branched Rollouts:</strong> Utilizes a localized dynamics model to generate short-horizon imaginary trajectories, significantly improving sample efficiency (60-110x) compared to model-free methods.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- 6. 实验结果 Experiments -->
+<section class="section">
+    <div class="container content">
+        <h2 class="title is-4">Experiments in Yantai Port Digital Twin</h2>
+        
+        <div class="columns is-3 is-centered">
+            <!-- Fig 5: Environment Setup -->
+            <div class="column">
+                <img src="static/images/fig5_env.png" alt="Yantai Port Environment" class="figure-img">
+                <p><em>Fig. 5. High-fidelity digital twin of Yantai Port in Unity3D, featuring heterogeneous vessels and IALA buoys.</em></p>
+            </div>
+            
+            <!-- Fig 8: 5-Vessel Trajectory -->
+            <div class="column">
+                <img src="static/images/fig8_trajectory.png" alt="5-Vessel Trajectory" class="figure-img">
+                <p><em>Fig. 8. Trajectory visualization of the 5-vessel low-density scenario.</em></p>
+            </div>
+            
+            <!-- Fig 24: 20-Vessel Trajectory -->
+            <div class="column">
+                <img src="static/images/fig24_dense.png" alt="20-Vessel High Density" class="figure-img">
+                <p><em>Fig. 24. Step-by-step trajectory visualization of the 20-vessel high-density scenario.</em></p>
+            </div>
+        </div>
+
+        <!-- Table 4: Performance Comparison -->
+        <div class="columns is-centered mt-6">
+            <div class="column is-full">
+                <h3 class="title is-5">Performance Comparison (Case III: 20 Vessels)</h3>
+                <table class="table is-bordered is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>Algorithm</th>
+                            <th>Success Rate (%)</th>
+                            <th>Collision Rate</th>
+                            <th>Comm. Cost (MB)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PPO</td>
+                            <td>76.45</td>
+                            <td>0.22</td>
+                            <td>12.45</td>
+                        </tr>
+                        <tr>
+                            <td>MAPPO</td>
+                            <td>81.20</td>
+                            <td>0.14</td>
+                            <td>12.42</td>
+                        </tr>
+                        <tr>
+                            <td><strong>K-TIMARL (Ours)</strong></td>
+                            <td><strong>88.60</strong></td>
+                            <td><strong>0.05</strong></td>
+                            <td><strong>1.85</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><em>Table 4. K-TIMARL achieves the highest success rate and lowest communication cost in high-density traffic.</em></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 7. 引用 Citation -->
+<section class="section">
+    <div class="container">
+        <h2 class="title is-4">Citation</h2>
+        <div class="citation-box">
+@article{zhao2026k,
+  title={K-TIMARL: Scalable and Rule-Compliant Multi-Agent Reinforcement Learning for Large-Scale Port Vessel Traffic Management}, 
+  author={Zhao, Yiming and Shi, Yuqi and Han, Duanfeng and Peng, Xiao and Zhao, Wangyuan and Han, Fenglei},
+  journal={Journal Name (If applicable)},
+  year={2026}
+}
+        </div>
+    </div>
+</section>
+
+<!-- 8. 页脚 Footer -->
+<footer class="footer has-text-centered">
+    <div class="container">
+        <p>Last updated: June 2026</p>
+        <p>Created with ❤️ for GitHub Pages</p>
+    </div>
+</footer>
+
+</body>
+</html>
